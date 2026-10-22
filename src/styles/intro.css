@@ -1,0 +1,173 @@
+/* Timeline (about 3.4 s):
+   0.0 s  the J falls into place out of a blur
+   0.9 s  a red light sweeps across the letter
+   1.5 s  the J steps back and JFLIX is spelled out
+   3.0 s  the curtain fades to the home page */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--black);
+  overflow: hidden;
+}
+
+.intro--leaving {
+  animation: intro-out 480ms var(--ease-in-out) forwards;
+  pointer-events: none;
+}
+
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.intro__glow {
+  position: absolute;
+  width: min(90vw, 720px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(161, 59, 70, 0.45), rgba(75, 59, 68, 0.15) 45%, transparent 70%);
+  filter: blur(30px);
+  opacity: 0;
+  animation: glow 2600ms 300ms var(--ease-out) forwards;
+}
+
+@keyframes glow {
+  40% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+}
+
+.intro__stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+}
+
+.intro__j {
+  width: clamp(110px, 24vw, 190px);
+  overflow: visible;
+  filter: drop-shadow(0 0 28px rgba(255, 1, 1, 0.35));
+  transform-origin: 50% 60%;
+  animation:
+    j-in 1000ms var(--ease-out) both,
+    j-step-back 900ms 1500ms var(--ease-in-out) forwards;
+}
+
+@keyframes j-in {
+  from {
+    opacity: 0;
+    transform: scale(1.9) translateY(-6%);
+    filter: blur(14px) drop-shadow(0 0 0 rgba(255, 1, 1, 0));
+  }
+  60% {
+    opacity: 1;
+  }
+}
+
+@keyframes j-step-back {
+  to {
+    transform: scale(0.62) translateY(-18%);
+    filter: drop-shadow(0 0 40px rgba(255, 1, 1, 0.55));
+  }
+}
+
+.intro__shine {
+  transform-box: view-box;
+  animation: shine 1100ms 850ms var(--ease-in-out) both;
+}
+
+@keyframes shine {
+  from {
+    transform: translateX(0) skewX(-12deg);
+  }
+  to {
+    transform: translateX(320px) skewX(-12deg);
+  }
+}
+
+.intro__flare {
+  position: absolute;
+  top: 58%;
+  width: min(70vw, 460px);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red-bright), transparent);
+  box-shadow: 0 0 18px 2px var(--red-glow);
+  transform: scaleX(0);
+  opacity: 0;
+  animation: flare 1300ms 900ms var(--ease-out) forwards;
+}
+
+@keyframes flare {
+  30% {
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+.intro__word {
+  margin-top: -1.5rem;
+  display: flex;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 9vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  color: var(--white);
+}
+
+.intro__word span {
+  display: inline-block;
+  opacity: 0;
+  animation: letter-in 700ms calc(1650ms + var(--i) * 90ms) var(--ease-out) forwards;
+}
+
+.intro__word span:nth-child(2) {
+  color: var(--red-bright);
+}
+
+@keyframes letter-in {
+  from {
+    opacity: 0;
+    transform: translateY(40%);
+    filter: blur(8px);
+    letter-spacing: 0.4em;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.intro__skip {
+  position: absolute;
+  right: var(--gutter);
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: rgba(254, 254, 254, 0.04);
+  color: var(--gray);
+  font-size: var(--text-xs);
+  transition: color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.intro__skip:hover {
+  color: var(--white);
+  border-color: rgba(254, 254, 254, 0.5);
+}

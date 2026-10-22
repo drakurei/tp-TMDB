@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
+import IntroAnimation from "./components/IntroAnimation.jsx";
 import { FavoritesProvider } from "./context/FavoritesContext.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import MovieDetailPage from "./pages/MovieDetailPage.jsx";
@@ -18,6 +19,8 @@ function App() {
 
   return (
     <FavoritesProvider>
+      {/* The intro is an overlay: the pages and TMDB requests load behind it */}
+      <IntroAnimation />
       <a href="#main" className="skip-link">
         Aller au contenu
       </a>
