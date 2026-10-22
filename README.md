@@ -2,7 +2,7 @@
 
 JFLIX est mon TP React : un mini service de découverte de films inspiré des plateformes de streaming. Les films, affiches et résumés viennent de l'API officielle [TMDB](https://www.themoviedb.org/).
 
-Site publié : _lien ajouté une fois le déploiement GitHub Pages vérifié._
+Site publié : https://drakurei.github.io/tp-TMDB/
 
 ## Le but
 
