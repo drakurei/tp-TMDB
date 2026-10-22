@@ -1,8 +1,10 @@
-/* Timeline (about 3.4 s):
-   0.0 s  the J falls into place out of a blur
-   0.9 s  a red light sweeps across the letter
-   1.5 s  the J steps back and JFLIX is spelled out
-   3.0 s  the curtain fades to the home page */
+/* Timeline (about 4.35 s):
+   0.0 s  pure black
+   0.3 s  the stem ribbon is drawn from the top, then the hook
+   1.0 s  vertical red beams run through the J, rays light up around it
+   2.2 s  the beams fade, a white reflection crosses the finished J
+   2.85 s the J steps back, then a line of light writes JFLIX
+   3.85 s the curtain fades and the home page makes its entrance */
 
 .intro {
   position: fixed;
@@ -10,12 +12,22 @@
   z-index: 200;
   display: grid;
   place-items: center;
-  background: var(--black);
+  background: #000;
   overflow: hidden;
 }
 
+/* Page behind the intro: no scroll, entrance animations wait */
+html[data-intro="playing"] {
+  overflow: hidden;
+}
+
+html[data-intro="playing"] .page,
+html[data-intro="playing"] .page * {
+  animation-play-state: paused;
+}
+
 .intro--leaving {
-  animation: intro-out 480ms var(--ease-in-out) forwards;
+  animation: intro-out 500ms var(--ease-in-out) forwards;
   pointer-events: none;
 }
 
@@ -26,137 +38,257 @@
   }
 }
 
-.intro__glow {
-  position: absolute;
-  width: min(90vw, 720px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(161, 59, 70, 0.45), rgba(75, 59, 68, 0.15) 45%, transparent 70%);
-  filter: blur(30px);
-  opacity: 0;
-  animation: glow 2600ms 300ms var(--ease-out) forwards;
+/* Every layer is stacked in the same grid cell, so the J and the
+   wordmark share the exact center of the screen */
+.intro > * {
+  grid-area: 1 / 1;
 }
 
-@keyframes glow {
-  40% {
-    opacity: 1;
-    transform: scale(1.05);
+/* ---------- Rays in the dark ---------- */
+.intro__rays {
+  position: absolute;
+  inset: 0;
+}
+
+.intro__rays span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent, rgba(255, 1, 1, 0.55) 35%, rgba(255, 170, 170, 0.5) 50%, rgba(161, 59, 70, 0.45) 65%, transparent);
+  opacity: 0;
+  transform: scaleY(0);
+  animation: ray 1500ms var(--ease-out) forwards;
+}
+
+@keyframes ray {
+  25% {
+    opacity: 0.9;
+    transform: scaleY(1);
+  }
+  45% {
+    opacity: 0.35;
+  }
+  60% {
+    opacity: 0.7;
   }
   to {
-    opacity: 0.55;
-    transform: scale(0.9);
+    opacity: 0;
+    transform: scaleY(1);
   }
 }
 
+/* ---------- The J ---------- */
 .intro__stage {
   position: relative;
   display: grid;
-  justify-items: center;
+  place-items: center;
+  animation:
+    push-in 2900ms var(--ease-out) both,
+    stage-out 450ms 2850ms var(--ease-in-out) forwards;
+}
+
+@keyframes push-in {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes stage-out {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.55);
+    filter: blur(6px);
+  }
+}
+
+.intro__halo {
+  position: absolute;
+  width: 170%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 1, 1, 0.32), rgba(161, 59, 70, 0.12) 40%, transparent 68%);
+  opacity: 0;
+  animation: halo 2400ms 900ms var(--ease-out) forwards;
+}
+
+@keyframes halo {
+  35% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.45;
+  }
 }
 
 .intro__j {
-  width: clamp(110px, 24vw, 190px);
+  position: relative;
+  height: min(44vh, 70vw);
+  width: auto;
   overflow: visible;
-  filter: drop-shadow(0 0 28px rgba(255, 1, 1, 0.35));
-  transform-origin: 50% 60%;
-  animation:
-    j-in 1000ms var(--ease-out) both,
-    j-step-back 900ms 1500ms var(--ease-in-out) forwards;
+  animation: j-light 900ms 2150ms var(--ease-out) both;
 }
 
-@keyframes j-in {
+@keyframes j-light {
   from {
-    opacity: 0;
-    transform: scale(1.9) translateY(-6%);
-    filter: blur(14px) drop-shadow(0 0 0 rgba(255, 1, 1, 0));
+    filter: brightness(0.75);
   }
-  60% {
-    opacity: 1;
-  }
-}
-
-@keyframes j-step-back {
-  to {
-    transform: scale(0.62) translateY(-18%);
-    filter: drop-shadow(0 0 40px rgba(255, 1, 1, 0.55));
-  }
-}
-
-.intro__shine {
-  transform-box: view-box;
-  animation: shine 1100ms 850ms var(--ease-in-out) both;
-}
-
-@keyframes shine {
-  from {
-    transform: translateX(0) skewX(-12deg);
+  40% {
+    filter: brightness(1.35) drop-shadow(0 0 18px rgba(255, 1, 1, 0.6));
   }
   to {
-    transform: translateX(320px) skewX(-12deg);
+    filter: brightness(1) drop-shadow(0 0 10px rgba(255, 1, 1, 0.35));
   }
 }
 
-.intro__flare {
-  position: absolute;
-  top: 58%;
-  width: min(70vw, 460px);
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--red-bright), transparent);
-  box-shadow: 0 0 18px 2px var(--red-glow);
-  transform: scaleX(0);
+.intro__ribbon {
+  fill: none;
+  stroke-width: 46;
+  /* The visible dash grows from 0 to the whole ribbon */
+  stroke-dasharray: 0 100;
+}
+
+.intro__ribbon--stem {
+  animation: draw 700ms 300ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+.intro__ribbon--hook {
+  animation: draw 650ms 850ms cubic-bezier(0.5, 0, 0.2, 1) both;
+}
+
+@keyframes draw {
+  from {
+    stroke-dasharray: 0 100;
+  }
+  to {
+    stroke-dasharray: 100 0;
+  }
+}
+
+/* Light beams, visible only inside the J thanks to the SVG mask */
+.intro__beams {
   opacity: 0;
-  animation: flare 1300ms 900ms var(--ease-out) forwards;
+  mix-blend-mode: screen;
+  animation: beams 1500ms 1000ms linear forwards;
 }
 
-@keyframes flare {
-  30% {
-    opacity: 1;
+.intro__beams--back {
+  transform-origin: center;
+  animation-name: beams-back;
+  animation-delay: 1150ms;
+}
+
+@keyframes beams {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  20% {
+    opacity: 0.95;
+  }
+  45% {
+    opacity: 0.55;
+  }
+  65% {
+    opacity: 0.9;
   }
   to {
-    transform: scaleX(1);
     opacity: 0;
+    transform: translateX(80px);
   }
 }
 
+@keyframes beams-back {
+  from {
+    opacity: 0;
+    transform: translateX(70px) scaleX(1.8);
+  }
+  30% {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-70px) scaleX(1.8);
+  }
+}
+
+.intro__specular {
+  opacity: 0;
+  animation: specular 650ms 2200ms var(--ease-in-out) forwards;
+}
+
+@keyframes specular {
+  from {
+    opacity: 1;
+    transform: translateX(0) skewX(-14deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(230px) skewX(-14deg);
+  }
+}
+
+/* ---------- Wordmark ---------- */
 .intro__word {
-  margin-top: -1.5rem;
-  display: flex;
+  position: relative;
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 9vw, 5.5rem);
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: clamp(3rem, 12vw, 7rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
   line-height: 1;
   color: var(--white);
+  clip-path: inset(0 100% 0 0);
+  animation: word-in 700ms 3150ms var(--ease-in-out) forwards;
 }
 
 .intro__word span {
-  display: inline-block;
-  opacity: 0;
-  animation: letter-in 700ms calc(1650ms + var(--i) * 90ms) var(--ease-out) forwards;
-}
-
-.intro__word span:nth-child(2) {
   color: var(--red-bright);
 }
 
-@keyframes letter-in {
-  from {
-    opacity: 0;
-    transform: translateY(40%);
-    filter: blur(8px);
-    letter-spacing: 0.4em;
-  }
+/* The line of light that writes the word */
+.intro__word::after {
+  content: "";
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: 0;
+  width: 3px;
+  background: #fff;
+  box-shadow: 0 0 14px 3px rgba(255, 1, 1, 0.9);
+  opacity: 0;
+  animation: writer 700ms 3150ms var(--ease-in-out) forwards;
+}
+
+@keyframes word-in {
   to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
+    clip-path: inset(0 -10% 0 0);
   }
 }
 
+@keyframes writer {
+  from {
+    opacity: 1;
+    left: 0;
+  }
+  85% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+/* ---------- Skip ---------- */
 .intro__skip {
-  position: absolute;
-  right: var(--gutter);
-  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  align-self: end;
+  justify-self: end;
+  margin: 0 var(--gutter) max(1.5rem, env(safe-area-inset-bottom));
   min-height: 44px;
   padding: 0 1.1rem;
   border: 1px solid var(--line-strong);
