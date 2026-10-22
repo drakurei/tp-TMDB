@@ -45,10 +45,11 @@ src/
 ├── context/      FavoritesContext (favoris + localStorage)
 ├── hooks/        useTmdb (chargement, erreur, annulation des requêtes)
 ├── pages/        HomePage, MovieDetailPage, FavoritesPage, NotFoundPage
+├── routing/      AppRoutes (les routes de l'application)
 ├── services/     tmdbApi.js (tous les appels à TMDB)
 ├── styles/       variables, global, components, intro
 ├── utils/        movieUtils.js (URL des images, dates, notes, durée)
-├── App.jsx       routes
+├── App.jsx       structure générale (intro, header, pages, footer)
 └── main.jsx
 docs/maquette.html   maquette statique de la page d'accueil
 ```

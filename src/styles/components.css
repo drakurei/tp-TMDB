@@ -605,9 +605,14 @@
   display: none;
 }
 
-.genre {
+/* The list items must not shrink, otherwise long labels wrap */
+.genres > li {
   flex: none;
+}
+
+.genre {
   min-height: 40px;
+  white-space: nowrap;
   padding: 0 1rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-pill);
