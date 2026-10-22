@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JFLIX, maquette de la page d'accueil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* Static mockup: images are a few real TMDB visuals used for illustration only */
+  :root {
+    --black: #0a0a0a; --surface: #171215; --wine: #4b3b44; --red: #a13b46;
+    --red-bright: #ff0101; --white: #fefefe; --gray: #b0a7ac; --bronze: #a78b71;
+    --line: rgba(254,254,254,.1);
+    --display: "Bodoni Moda", Didot, Georgia, serif;
+    --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+    --gutter: clamp(1rem, 4vw, 3.5rem);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--black); color: var(--white); font-family: var(--body); }
+  .note { background: var(--surface); color: var(--gray); font-size: 13px; padding: 10px var(--gutter); border-bottom: 1px solid var(--line); }
+  header { position: absolute; inset: 40px 0 auto; display: flex; align-items: center; gap: 2rem; padding: 0 var(--gutter); height: 68px; z-index: 2; }
+  .logo { font-family: var(--display); font-weight: 800; font-size: 1.6rem; letter-spacing: .04em; }
+  .logo span { color: var(--red-bright); }
+  nav { display: flex; gap: 1.5rem; font-size: 15px; color: var(--gray); }
+  nav a:first-child { color: var(--white); }
+  .hero { position: relative; min-height: 78vh; display: flex; align-items: flex-end; padding: 0 var(--gutter) 4.5rem; overflow: hidden; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+  .hero::after { content: ""; position: absolute; inset: 0; background:
+    linear-gradient(90deg, rgba(10,10,10,.92) 0%, rgba(10,10,10,.55) 45%, transparent 75%),
+    linear-gradient(0deg, var(--black) 0%, transparent 45%),
+    radial-gradient(60% 50% at 0% 100%, rgba(161,59,70,.35), transparent 70%); }
+  .hero-content { position: relative; z-index: 1; max-width: 40rem; }
+  .kicker { color: var(--bronze); font-size: 15px; margin-bottom: 1rem; }
+  h1 { font-family: var(--display); font-size: clamp(2.75rem, 7vw, 5.75rem); line-height: .95; font-weight: 600; letter-spacing: -.01em; }
+  .hero p { color: var(--gray); font-size: 17px; line-height: 1.6; margin: 1.25rem 0 2rem; max-width: 34rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .btn { padding: .9rem 1.5rem; border-radius: 999px; font-weight: 600; font-size: 15px; border: 1px solid transparent; }
+  .btn-primary { background: var(--red); box-shadow: 0 0 40px rgba(255,1,1,.25); }
+  .btn-ghost { border-color: rgba(254,254,254,.25); background: rgba(254,254,254,.06); backdrop-filter: blur(10px); }
+  .search { margin: -1.5rem var(--gutter) 0; position: relative; z-index: 2; display: flex; gap: .5rem; padding: .5rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(23,18,21,.85); backdrop-filter: blur(14px); max-width: 46rem; }
+  .search input { flex: 1; background: none; border: 0; color: var(--white); font: inherit; font-size: 17px; padding: 0 1.25rem; }
+  .search .btn { background: var(--white); color: var(--black); }
+  section { padding: 3.5rem var(--gutter); }
+  h2 { font-family: var(--display); font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; margin-bottom: .4rem; }
+  .sub { color: var(--gray); margin-bottom: 1.5rem; }
+  .chips { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .chip { padding: .45rem 1rem; border: 1px solid var(--line); border-radius: 999px; color: var(--gray); font-size: 14px; }
+  .chip.on { border-color: var(--red); color: var(--white); background: rgba(161,59,70,.2); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 2rem 1.25rem; }
+  .card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); display: block; }
+  .card h3 { font-size: 16px; font-weight: 600; margin-top: .8rem; }
+  .meta { display: flex; justify-content: space-between; color: var(--gray); font-size: 14px; margin-top: .25rem; }
+  .meta b { color: var(--bronze); font-weight: 500; }
+  footer { border-top: 1px solid var(--line); padding: 2rem var(--gutter); color: var(--gray); font-size: 14px; }
+  @media (max-width: 640px) {
+    nav { display: none; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem .9rem; }
+    .search input { padding: 0 .75rem; }
+  }
+</style>
+</head>
+<body>
+  <p class="note">Maquette statique de JFLIX. Les visuels sont quelques images TMDB réelles utilisées pour illustrer la composition ; l'application React charge ses données depuis l'API.</p>
+  <header>
+    <div class="logo">J<span>F</span>LIX</div>
+    <nav><a>Accueil</a><a>Rechercher</a><a>Ma liste</a></nav>
+  </header>
+  <div class="hero">
+    <img src="https://image.tmdb.org/t/p/w1280/8Tfys3mDZVp4tNoH2ktm06a0Tau.jpg" alt="" />
+    <div class="hero-content">
+      <p class="kicker">Le film le plus regardé en ce moment</p>
+      <h1>Projet Dernière Chance</h1>
+      <p>Les films du moment, leurs affiches et leurs histoires, réunis dans une salle qui ne ferme jamais.</p>
+      <div class="actions">
+        <span class="btn btn-primary">Explorer les films</span>
+        <span class="btn btn-ghost">Voir ce film</span>
+      </div>
+    </div>
+  </div>
+  <form class="search" onsubmit="return false">
+    <input placeholder="Un titre, une saga, un souvenir de film…" aria-label="Rechercher un film" />
+    <span class="btn">Rechercher</span>
+  </form>
+  <section>
+    <h2>À l'affiche</h2>
+    <p class="sub">Les films les plus populaires sur TMDB cette semaine.</p>
+    <div class="chips"><span class="chip on">Tous</span><span class="chip">Action</span><span class="chip">Animation</span><span class="chip">Drame</span><span class="chip">Science-Fiction</span></div>
+    <div class="grid">
+      <div class="card"><img src="https://image.tmdb.org/t/p/w342/6OEtkkzoyusZDm2uMJojlWZSLR9.jpg" alt="" /><h3>Spider-Man : Brand New Day</h3><div class="meta"><span>2026</span><b>8,5</b></div></div>
+      <div class="card"><img src="https://image.tmdb.org/t/p/w342/wzyy8ZrsuHfAt4iz4iH3rT0tdoT.jpg" alt="" /><h3>Projet Dernière Chance</h3><div class="meta"><span>2026</span><b>8,6</b></div></div>
+      <div class="card"><img src="https://image.tmdb.org/t/p/w342/kP8jJIkmX0vWEYiqQ9c5zU0dvcn.jpg" alt="" /><h3>L'Odyssée</h3><div class="meta"><span>2026</span><b>8,0</b></div></div>
+      <div class="card"><img src="https://image.tmdb.org/t/p/w342/tGdFDoA9qyt0t6Qr9MFnOl8Z2Jz.jpg" alt="" /><h3>Hope</h3><div class="meta"><span>2026</span><b>6,9</b></div></div>
+      <div class="card"><img src="https://image.tmdb.org/t/p/w342/k53HHxQ4rQG0dME6nsofii3QNS7.jpg" alt="" /><h3>Street Fighter</h3><div class="meta"><span>2026</span><b>6,3</b></div></div>
+      <div class="card"><img src="https://image.tmdb.org/t/p/w342/vSgnJDw404JUokiy5NDZgXOi01E.jpg" alt="" /><h3>Matchbox – Le film</h3><div class="meta"><span>2026</span><b>7,8</b></div></div>
+    </div>
+  </section>
+  <footer>JFLIX est un projet pédagogique React. Ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.</footer>
+</body>
+</html>

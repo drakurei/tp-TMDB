@@ -1,0 +1,42 @@
+:root {
+  /* Palette */
+  --black: #0a0a0a;
+  --black-tint: #11080c;
+  --surface: #171215;
+  --surface-raised: #1f181c;
+  --wine: #4b3b44;
+  --red: #a13b46;
+  --red-bright: #ff0101;
+  --red-glow: rgba(255, 1, 1, 0.35);
+  --white: #fefefe;
+  --gray: #b0a7ac;
+  --bronze: #a78b71;
+
+  --line: rgba(254, 254, 254, 0.1);
+  --line-strong: rgba(254, 254, 254, 0.2);
+
+  /* Type */
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.375rem;
+  --text-xl: clamp(1.75rem, 3vw, 2.5rem);
+  --text-hero: clamp(2.75rem, 7vw, 5.75rem);
+
+  /* Layout */
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --max-width: 1440px;
+  --header-height: 4.25rem;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+}
