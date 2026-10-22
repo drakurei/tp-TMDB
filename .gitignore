@@ -1,0 +1,19 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+node_modules
+dist
+dist-ssr
+
+# Local environment (the TMDB token must never be committed)
+.env
+.env.*
+!.env.example
+*.local
+
+# Editor directories and files
+.vscode/*
+.idea
+.DS_Store
